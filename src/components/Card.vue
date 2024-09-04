@@ -1,0 +1,27 @@
+<script setup>
+
+defineProps({
+    bgcolor: {
+        type: String,
+        default: '#fff'
+    }
+});
+
+</script>
+
+<template>
+    <div class="card">
+        <slot></slot>
+    </div>
+</template>
+
+<style scoped>
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+</style>
