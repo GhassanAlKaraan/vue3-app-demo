@@ -1,0 +1,66 @@
+{
+    "cats": [
+        {
+            "name": "Whiskers",
+            "breed": "Maine Coon",
+            "age": 3,
+            "favoriteToy": "Feather Wand"
+        },
+        {
+            "name": "Mittens",
+            "breed": "Siamese",
+            "age": 2,
+            "favoriteToy": "Laser Pointer"
+        },
+        {
+            "name": "Shadow",
+            "breed": "British Shorthair",
+            "age": 4,
+            "favoriteToy": "Catnip Mouse"
+        },
+        {
+            "name": "Bella",
+            "breed": "Persian",
+            "age": 5,
+            "favoriteToy": "Scratching Post"
+        },
+        {
+            "name": "Luna",
+            "breed": "Bengal",
+            "age": 1,
+            "favoriteToy": "Interactive Ball"
+        }
+    ],
+    "users": [
+        {
+            "username": "johndoe",
+            "email": "johndoe@example.com",
+            "passwordHash": "5f4dcc3b5aa765d61d8327deb882cf99",
+            "role": "admin"
+        },
+        {
+            "username": "janedoe",
+            "email": "janedoe@example.com",
+            "passwordHash": "d8578edf8458ce06fbc5bb76a58c5ca4",
+            "role": "user"
+        },
+        {
+            "username": "bobsmith",
+            "email": "bobsmith@example.com",
+            "passwordHash": "5f4dcc3b5aa765d61d8327deb882cf99",
+            "role": "user"
+        },
+        {
+            "username": "alicewong",
+            "email": "alicewong@example.com",
+            "passwordHash": "d8578edf8458ce06fbc5bb76a58c5ca4",
+            "role": "moderator"
+        },
+        {
+            "username": "michaelbrown",
+            "email": "michaelbrown@example.com",
+            "passwordHash": "e99a18c428cb38d5f260853678922e03",
+            "role": "user"
+        }
+    ]
+}
