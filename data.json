@@ -1,30 +1,35 @@
 {
     "cats": [
         {
+            "id": "1",
             "name": "Whiskers",
             "breed": "Maine Coon",
             "age": 3,
             "favoriteToy": "Feather Wand"
         },
         {
+            "id": "2",
             "name": "Mittens",
             "breed": "Siamese",
             "age": 2,
             "favoriteToy": "Laser Pointer"
         },
         {
+            "id": "3",
             "name": "Shadow",
             "breed": "British Shorthair",
             "age": 4,
             "favoriteToy": "Catnip Mouse"
         },
         {
+            "id": "4",
             "name": "Bella",
             "breed": "Persian",
             "age": 5,
             "favoriteToy": "Scratching Post"
         },
         {
+            "id": "5",
             "name": "Luna",
             "breed": "Bengal",
             "age": 1,

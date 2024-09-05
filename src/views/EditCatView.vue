@@ -1,47 +1,95 @@
 <script setup>
-import { reactive, onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-
-const route = useRoute();
-const router = useRouter();
+import router from "@/router";
+import { reactive, onMounted } from "vue";
+import { useToast } from "vue-toastification";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 // State
-const cat = ref({
+const form = reactive({ // variable for the fields in the form
     name: '',
     breed: '',
     age: 0,
     favoriteToy: ''
 });
-
-const state = reactive({
+const state = reactive({ // isLoading variable
     isLoading: true
 });
+const catId = router.currentRoute.value.params.id; // id from params
+//
 
-onMounted(() => {
+const toast = useToast();
+
+const fetchDetails = async () => {
     try {
-        if (route.state && route.state.cat) {
-            cat.value = { ...route.state.cat };
+        const response = await fetch(`http://localhost:5000/cats/${catId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const text = await response.text(); // Read as text to check content
+        console.log(text); // Log the raw response
+        if (response.ok) {
+            const cat = JSON.parse(text); // Parse only if valid JSON
+            form.name = cat.name;
+            form.breed = cat.breed;
+            form.age = cat.age;
+            form.favoriteToy = cat.favoriteToy;
         } else {
-            console.warn("No cat data found in state");
-            router.push('/cats');
+            toast.error('Failed to fetch cat details.');
         }
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching cat details:', error);
+        toast.error('An error occurred while fetching cat details.');
+    }
+};
+
+
+const handleSubmit = async () => {
+    const updatedCat = {
+        name: form.name,
+        breed: form.breed,
+        age: form.age,
+        favoriteToy: form.favoriteToy
+    };
+    try {
+        const response = await fetch(`http://localhost:5000/cats/${catId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedCat),
+        });
+        console.log(response);
+        if (response.ok) {
+            toast.success('Cat successfully updated.');
+            router.push('/cats');
+        } else {
+            toast.error('Cat could not be updated.');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+onMounted(async () => {
+    try {
+        await fetchDetails();
+    } catch (error) {
+        console.log(error);
     } finally {
         state.isLoading = false;
     }
 });
 
-function handleSubmit() {
-    // Logic to handle form submission
-    console.log("Saving cat data:", cat.value);
-}
 </script>
 
 
-
 <template>
-    <div class="container">
+    <div v-if="state.isLoading" class="load-spinner">
+        <PulseLoader />
+    </div>
+    <section v-else class="container">
         <header>
             <h2>Edit Cat Info</h2>
         </header>
@@ -49,19 +97,19 @@ function handleSubmit() {
             <form @submit.prevent="handleSubmit" class="form">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" v-model="cat.name" />
+                    <input type="text" id="name" name="name" v-model="cat.name" required />
                 </div>
                 <div class="form-group">
                     <label for="breed">Breed</label>
-                    <input type="text" id="breed" name="breed" v-model="cat.breed" />
+                    <input type="text" id="breed" name="breed" v-model="cat.breed" required />
                 </div>
                 <div class="form-group">
                     <label for="age">Age</label>
-                    <input type="number" id="age" name="age" v-model="cat.age" />
+                    <input type="number" id="age" name="age" v-model="cat.age" required />
                 </div>
                 <div class="form-group">
                     <label for="favorite-toy">Favorite Toy</label>
-                    <input type="text" id="favorite-toy" name="favorite-toy" v-model="cat.favoriteToy" />
+                    <input type="text" id="favorite-toy" name="favorite-toy" v-model="cat.favoriteToy" required />
                 </div>
                 <div class="buttons">
                     <RouterLink to="/cats" class="btn-secondary">Cancel</RouterLink>
@@ -69,10 +117,14 @@ function handleSubmit() {
                 </div>
             </form>
         </main>
-    </div>
+    </section>
 </template>
 
 <style scoped>
+.load-spinner {
+    text-align: center;
+}
+
 .container {
     max-width: 400px;
     margin: 0 auto;

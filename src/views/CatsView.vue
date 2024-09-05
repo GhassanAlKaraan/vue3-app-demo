@@ -1,9 +1,9 @@
 <script setup>
 import CatCard from "@/components/CatCard.vue";
-import { ref } from "vue";
+import { useToast } from "vue-toastification";
+import { reactive, onMounted, ref } from "vue";
 import { RouterLink } from 'vue-router';
 
-// Function moved inside <script setup> so it's directly accessible in the template
 function getRandomColor() {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -12,25 +12,48 @@ function getRandomColor() {
     }
     return color;
 }
+const cats = ref([]);
+const state = reactive({
+    isLoading: true
+});
 
-const cats = ref([
-    { name: "Shadow", breed: "British Shorthair", age: 4, favoriteToy: "Catnip Mouse" },
-    { name: "Whiskers", breed: "Siamese", age: 3, favoriteToy: "Laser Pointer" },
-    { name: "Mittens", breed: "Persian", age: 5, favoriteToy: "Yarn Ball" },
-    { name: "Luna", breed: "Maine Coon", age: 2, favoriteToy: "Feather Wand" },
-    { name: "Oliver", breed: "Scottish Fold", age: 6, favoriteToy: "Crinkle Ball" },
-    { name: "Bella", breed: "Ragdoll", age: 4, favoriteToy: "Scratching Post" },
-    { name: "Max", breed: "Sphynx", age: 3, favoriteToy: "Plush Mouse" },
-    { name: "Lucy", breed: "Bengal", age: 5, favoriteToy: "Interactive Puzzle" },
-    { name: "Milo", breed: "Russian Blue", age: 2, favoriteToy: "Ribbon Toy" },
-    { name: "Nala", breed: "Abyssinian", age: 4, favoriteToy: "Cat Tunnel" }
-]);
+const toast = useToast();
+
+const fetchCats = async () => {
+    try {
+        const response = await fetch(`http://localhost:5000/cats`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.ok) {
+            cats.value = await response.json();
+            toast.success('Fetched cats successfully.');
+        } else {
+            toast.error('Failed to fetch cat details.');
+        }
+    } catch (error) {
+        console.error('Error fetching cat details:', error);
+        toast.error('An error occurred while fetching cat details.');
+    }
+};
+
+onMounted(async () => {
+    try {
+        await fetchCats();
+    } catch (error) {
+        console.error(error);
+    } finally {
+        state.isLoading = false;
+    }
+});
+
 </script>
 
 <template>
     <div class="card-container">
-        <RouterLink v-for="(cat, index) in cats" :key="index"
-            :to="{ name: 'edit-cat', params: { id: index }, state: { cat } }">
+        <RouterLink v-for="cat in cats" :key="cat.id" :to="{ name: 'edit-cat', params: { id: cat.id } }">
             <CatCard :catModel="cat" :bgcolor="getRandomColor()"></CatCard>
         </RouterLink>
     </div>

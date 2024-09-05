@@ -18,5 +18,34 @@ Create a data.json with the dummy data, then:
 
 ```bash
 npm install -g json-server
-npx json-server --watch data.json
+```
+
+```bash
+npx json-server --watch data.json --port 5000
+```
+
+or add the script to package.json (without the 'npx' part) then
+
+```bash
+npm run server
+```
+
+## Toast
+
+```bash
+npm install --save vue-toastification@next
+```
+
+Add the following to main.js:
+
+```javascript
+import "vue-toastification/dist/index.css";
+import Toast from 'vue-toastification';
+app.use(Toast);
+```
+
+## Spinner
+
+```bash
+npm install vue-spinner
 ```
