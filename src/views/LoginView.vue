@@ -16,6 +16,7 @@
                     <input type="password" id="password" name="password" />
                 </div>
                 <button type="submit" class="login-button">Login</button>
+
             </form>
         </main>
     </div>
@@ -26,7 +27,7 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f5f5f5;
+    color: #f5f5f5;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -37,7 +38,7 @@ header {
 }
 
 h2 {
-    color: #333;
+    /* color: #333; */
     font-size: 24px;
 }
 
@@ -53,7 +54,7 @@ h2 {
 label {
     display: block;
     margin-bottom: 2px;
-    color: #555;
+    /* color: #555; */
     font-weight: 600;
 }
 
@@ -69,15 +70,15 @@ input {
     background-color: #181818;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 0.8rem;
+    font-weight: 500;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .login-button:hover {
-    background-color: white;
-    color: #181818;
+    background-color: #53AF50;
 }
 </style>
