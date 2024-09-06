@@ -1,4 +1,54 @@
-<script setup></script>
+<script setup>
+import router from "@/router";
+import { reactive } from "vue";
+import { useToast } from "vue-toastification";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
+const form = reactive({
+    name: '',
+    breed: '',
+    age: 0,
+    favoriteToy: ''
+});
+
+const state = reactive({ // isLoading variable
+    isLoading: false
+});
+
+const toast = useToast();
+
+
+const handleAdd = async () => {
+    state.isLoading = true;
+    const newCat = {
+        name: form.name,
+        breed: form.breed,
+        age: form.age,
+        favoriteToy: form.favoriteToy
+    };
+    try {
+        const response = await fetch(`http://localhost:5000/cats`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newCat),
+        });
+        console.log(response);
+        if (response.ok) {
+            toast.success('Cat added successfully.');
+            router.push('/cats');
+        } else {
+            toast.error('Cat could not be added.');
+        }
+    } catch (error) {
+        console.log(error);
+    } finally {
+        state.isLoading = false;
+    }
+}
+
+</script>
 
 <template>
     <div class="container">
@@ -6,26 +56,29 @@
             <h2>Add a new Cat</h2>
         </header>
         <main>
-            <form class="form">
+            <form @submit.prevent="handleAdd" class="form">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" />
+                    <input type="text" id="name" name="name" v-model="form.name" required />
                 </div>
                 <div class="form-group">
                     <label for="breed">Breed</label>
-                    <input type="text" id="breed" name="breed" />
+                    <input type="text" id="breed" name="breed" v-model="form.breed" required />
                 </div>
                 <div class="form-group">
                     <label for="age">Age</label>
-                    <input type="number" id="age" name="age" />
+                    <input type="number" id="age" name="age" v-model="form.age" required />
                 </div>
                 <div class="form-group">
                     <label for="favorite-toy">Favorite Toy</label>
-                    <input type="text" id="favorite-toy" name="favorite-toy" />
+                    <input type="text" id="favorite-toy" name="favorite-toy" v-model="form.favoriteToy" required />
                 </div>
                 <div class="buttons">
                     <RouterLink to="/cats" class="btn-secondary">Cancel</RouterLink>
-                    <button type="submit" class="btn">Add</button>
+                    <div v-if="state.isLoading" class="load-spinner">
+                        <PulseLoader />
+                    </div>
+                    <button v-else type="submit" class="btn">Add</button>
                 </div>
             </form>
         </main>

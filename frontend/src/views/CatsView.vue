@@ -13,9 +13,7 @@ function getRandomColor() {
     return color;
 }
 const cats = ref([]);
-const state = reactive({
-    isLoading: true
-});
+const state = reactive({ isLoading: true });
 
 const toast = useToast();
 
@@ -29,7 +27,7 @@ const fetchCats = async () => {
         });
         if (response.ok) {
             cats.value = await response.json();
-            toast.success('Fetched cats successfully.');
+            
         } else {
             toast.error('Failed to fetch cat details.');
         }

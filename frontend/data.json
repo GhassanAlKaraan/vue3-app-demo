@@ -1,0 +1,62 @@
+{
+  "cats": [
+    {
+      "id": "e0c7",
+      "name": "Rhiannon Williamson",
+      "breed": "Eos voluptatibus et",
+      "age": 5,
+      "favoriteToy": "Qui reprehenderit n"
+    },
+    {
+      "id": "91ea",
+      "name": "Ella Bennett",
+      "breed": "Enim ea voluptatibus",
+      "age": 2,
+      "favoriteToy": "Sunt magni laudantiu"
+    },
+    {
+      "id": "4130",
+      "name": "Briar Merritt",
+      "breed": "Commodo lorem exerci",
+      "age": 5,
+      "favoriteToy": "Numquam omnis fuga "
+    }
+  ],
+  "users": [
+    {
+      "username": "johndoe",
+      "email": "johndoe@example.com",
+      "passwordHash": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "role": "admin",
+      "id": "9f53"
+    },
+    {
+      "username": "janedoe",
+      "email": "janedoe@example.com",
+      "passwordHash": "d8578edf8458ce06fbc5bb76a58c5ca4",
+      "role": "user",
+      "id": "e54f"
+    },
+    {
+      "username": "bobsmith",
+      "email": "bobsmith@example.com",
+      "passwordHash": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "role": "user",
+      "id": "7360"
+    },
+    {
+      "username": "alicewong",
+      "email": "alicewong@example.com",
+      "passwordHash": "d8578edf8458ce06fbc5bb76a58c5ca4",
+      "role": "moderator",
+      "id": "1f99"
+    },
+    {
+      "username": "michaelbrown",
+      "email": "michaelbrown@example.com",
+      "passwordHash": "e99a18c428cb38d5f260853678922e03",
+      "role": "user",
+      "id": "89a7"
+    }
+  ]
+}

@@ -20,6 +20,13 @@ const catId = router.currentRoute.value.params.id; // id from params
 const toast = useToast();
 
 const fetchDetails = async () => {
+
+    //*
+    console.log(`Cat ID: ${catId}`);
+
+    //*
+
+
     try {
         const response = await fetch(`http://localhost:5000/cats/${catId}`, {
             method: 'GET',
@@ -45,7 +52,7 @@ const fetchDetails = async () => {
 };
 
 
-const handleSubmit = async () => {
+const handleUpdate = async () => {
     const updatedCat = {
         name: form.name,
         breed: form.breed,
@@ -72,6 +79,26 @@ const handleSubmit = async () => {
     }
 };
 
+const handleDelete = async () => {
+    try {
+        const response = await fetch(`http://localhost:5000/cats/${catId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            toast.success('Cat successfully deleted.');
+            router.push('/cats');
+        } else {
+            toast.error('Cat could not be deleted.');
+        }
+    } catch (error) {
+        console.error('Error deleting cat:', error);
+        toast.error('An error occurred while deleting the cat.');
+    }
+};
+
 onMounted(async () => {
     try {
         await fetchDetails();
@@ -94,27 +121,28 @@ onMounted(async () => {
             <h2>Edit Cat Info</h2>
         </header>
         <main>
-            <form @submit.prevent="handleSubmit" class="form">
+            <form @submit.prevent="handleUpdate" class="form">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" v-model="cat.name" required />
+                    <input type="text" id="name" name="name" v-model="form.name" required />
                 </div>
                 <div class="form-group">
                     <label for="breed">Breed</label>
-                    <input type="text" id="breed" name="breed" v-model="cat.breed" required />
+                    <input type="text" id="breed" name="breed" v-model="form.breed" required />
                 </div>
                 <div class="form-group">
                     <label for="age">Age</label>
-                    <input type="number" id="age" name="age" v-model="cat.age" required />
+                    <input type="number" id="age" name="age" v-model="form.age" required />
                 </div>
                 <div class="form-group">
                     <label for="favorite-toy">Favorite Toy</label>
-                    <input type="text" id="favorite-toy" name="favorite-toy" v-model="cat.favoriteToy" required />
+                    <input type="text" id="favorite-toy" name="favorite-toy" v-model="form.favoriteToy" required />
                 </div>
                 <div class="buttons">
                     <RouterLink to="/cats" class="btn-secondary">Cancel</RouterLink>
                     <button type="submit" class="btn">Save</button>
                 </div>
+                <button type="button" class="btn-delete" @click="handleDelete">Delete</button>
             </form>
         </main>
     </section>
@@ -182,6 +210,26 @@ input {
     text-align: center;
 }
 
+.btn-delete {
+    width: 100%;
+    background-color: rgb(184, 40, 40);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    font-weight: 500;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    margin-top: 10px;
+    font-family: inherit;
+}
+
+.btn-delete:hover {
+    background-color: red;
+}
+
 .btn {
     width: 100%;
     font-family: inherit;
@@ -198,7 +246,8 @@ input {
 }
 
 .btn-secondary:hover {
-    background-color: #D63A3A;
+    background-color: #FFFFFF;
+    color: black;
 
 }
 
