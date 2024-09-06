@@ -27,7 +27,7 @@ const fetchCats = async () => {
         });
         if (response.ok) {
             cats.value = await response.json();
-            
+
         } else {
             toast.error('Failed to fetch cat details.');
         }
@@ -63,5 +63,17 @@ onMounted(async () => {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
