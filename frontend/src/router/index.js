@@ -30,8 +30,7 @@ const routes = [
   {
     path: '/cats/edit/:id',
     name: 'edit-cat',
-    component: EditCatView,
-    props: (route) => ({ cat: route.params.cat })
+    component: EditCatView
   },
   {
     path: '/:catchAll(.*)*',

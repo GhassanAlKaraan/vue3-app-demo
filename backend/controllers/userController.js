@@ -53,7 +53,6 @@ const registerUser = asyncHandler(async (req, res) => {
 
 // const updateUserProfile = asyncHandler(async (req, res) => {
 //   const { name } = req.body;
-
 //   const user = await User.findById(req.user._id);
 //   try {
 //     user.name = name;
@@ -72,9 +71,4 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
-export {
-  login,
-  registerUser,
-  // updateUserProfile, 
-  getUser
-};
+export { login, registerUser, getUser };

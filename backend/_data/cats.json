@@ -1,0 +1,122 @@
+[
+    {
+        "name": "Molly",
+        "breed": "Mountain Ninja",
+        "age": 3,
+        "favoriteToy": "Knives"
+    },
+    {
+        "name": "Whiskers",
+        "breed": "Siamese",
+        "age": 5,
+        "favoriteToy": "Feather Wand"
+    },
+    {
+        "name": "Shadow",
+        "breed": "Russian Blue",
+        "age": 2,
+        "favoriteToy": "Laser Pointer"
+    },
+    {
+        "name": "Bella",
+        "breed": "Persian",
+        "age": 4,
+        "favoriteToy": "Yarn Ball"
+    },
+    {
+        "name": "Luna",
+        "breed": "Bengal",
+        "age": 1,
+        "favoriteToy": "Jingle Bell"
+    },
+    {
+        "name": "Oliver",
+        "breed": "Maine Coon",
+        "age": 6,
+        "favoriteToy": "Scratching Post"
+    },
+    {
+        "name": "Max",
+        "breed": "Scottish Fold",
+        "age": 3,
+        "favoriteToy": "Catnip Mouse"
+    },
+    {
+        "name": "Chloe",
+        "breed": "Sphynx",
+        "age": 5,
+        "favoriteToy": "Rubber Ball"
+    },
+    {
+        "name": "Simba",
+        "breed": "Ragdoll",
+        "age": 4,
+        "favoriteToy": "Plush Lion"
+    },
+    {
+        "name": "Nala",
+        "breed": "Abyssinian",
+        "age": 2,
+        "favoriteToy": "Toy Bird"
+    },
+    {
+        "name": "Charlie",
+        "breed": "British Shorthair",
+        "age": 7,
+        "favoriteToy": "Paper Bag"
+    },
+    {
+        "name": "Milo",
+        "breed": "Oriental Shorthair",
+        "age": 1,
+        "favoriteToy": "Squeaky Mouse"
+    },
+    {
+        "name": "Sasha",
+        "breed": "Turkish Van",
+        "age": 5,
+        "favoriteToy": "Furry Ball"
+    },
+    {
+        "name": "Cleo",
+        "breed": "Egyptian Mau",
+        "age": 3,
+        "favoriteToy": "Cardboard Box"
+    },
+    {
+        "name": "Jasper",
+        "breed": "Norwegian Forest Cat",
+        "age": 6,
+        "favoriteToy": "String Toy"
+    },
+    {
+        "name": "Loki",
+        "breed": "Bombay",
+        "age": 4,
+        "favoriteToy": "Rubber Mouse"
+    },
+    {
+        "name": "Felix",
+        "breed": "Manx",
+        "age": 2,
+        "favoriteToy": "Chew Toy"
+    },
+    {
+        "name": "Oscar",
+        "breed": "American Shorthair",
+        "age": 3,
+        "favoriteToy": "Feather Duster"
+    },
+    {
+        "name": "Ruby",
+        "breed": "Balinese",
+        "age": 4,
+        "favoriteToy": "Toy Fish"
+    },
+    {
+        "name": "Lily",
+        "breed": "Savannah",
+        "age": 1,
+        "favoriteToy": "Rattling Ball"
+    }
+]

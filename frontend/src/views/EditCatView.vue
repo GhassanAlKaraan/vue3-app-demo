@@ -20,24 +20,17 @@ const catId = router.currentRoute.value.params.id; // id from params
 const toast = useToast();
 
 const fetchDetails = async () => {
-
-    //*
-    console.log(`Cat ID: ${catId}`);
-
-    //*
-
-
     try {
-        const response = await fetch(`http://localhost:5000/cats/${catId}`, {
+        const response = await fetch(`http://localhost:5000/api/cats/${catId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            credentials: 'include',
         });
-        const text = await response.text(); // Read as text to check content
-        console.log(text); // Log the raw response
         if (response.ok) {
-            const cat = JSON.parse(text); // Parse only if valid JSON
+            const json = await response.json();
+            const cat = json.cat;
             form.name = cat.name;
             form.breed = cat.breed;
             form.age = cat.age;
@@ -60,14 +53,14 @@ const handleUpdate = async () => {
         favoriteToy: form.favoriteToy
     };
     try {
-        const response = await fetch(`http://localhost:5000/cats/${catId}`, {
+        const response = await fetch(`http://localhost:5000/api/cats/${catId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(updatedCat),
         });
-        console.log(response);
         if (response.ok) {
             toast.success('Cat successfully updated.');
             router.push('/cats');
@@ -81,11 +74,12 @@ const handleUpdate = async () => {
 
 const handleDelete = async () => {
     try {
-        const response = await fetch(`http://localhost:5000/cats/${catId}`, {
+        const response = await fetch(`http://localhost:5000/api/cats/${catId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
         if (response.ok) {
             toast.success('Cat successfully deleted.');

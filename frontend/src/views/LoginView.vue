@@ -1,4 +1,45 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useToast } from "vue-toastification";
+const email = ref('');
+const password = ref('');
+const errorMessage = ref('');
+const router = useRouter();
+
+const toast = useToast();
+
+const login = async () => {
+    try {
+        console.log(`Email: ${email.value}, Password: ${password.value}`);
+
+        const response = await fetch('http://localhost:5000/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email.value,
+                password: password.value,
+            }),
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            toast.success('Login successful!');
+            router.push('/');
+        } else {
+            const errorData = await response.json();
+            errorMessage.value = errorData.message || 'Login failed. Please try again.';
+            toast.error(errorMessage.value);
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        errorMessage.value = 'An error occurred. Please try again later.';
+        toast.error(errorMessage.value);
+    }
+};
+</script>
 
 <template>
     <div class="login-container">
@@ -6,17 +47,19 @@
             <h2>Welcome, please login</h2>
         </header>
         <main>
-            <form class="login-form">
+            <form class="login-form" @submit.prevent="login">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" v-model="email" required />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" />
+                    <input type="password" id="password" name="password" v-model="password" required />
                 </div>
                 <button type="submit" class="login-button">Login</button>
-
+                <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> <!-- Error message display -->
             </form>
         </main>
     </div>
@@ -38,7 +81,6 @@ header {
 }
 
 h2 {
-    /* color: #333; */
     font-size: 24px;
 }
 
@@ -54,7 +96,6 @@ h2 {
 label {
     display: block;
     margin-bottom: 2px;
-    /* color: #555; */
     font-weight: 600;
 }
 
@@ -80,5 +121,10 @@ input {
 
 .login-button:hover {
     background-color: #53AF50;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
 }
 </style>

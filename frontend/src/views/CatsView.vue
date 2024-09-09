@@ -3,6 +3,7 @@ import CatCard from "@/components/CatCard.vue";
 import { useToast } from "vue-toastification";
 import { reactive, onMounted, ref } from "vue";
 import { RouterLink } from 'vue-router';
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 function getRandomColor() {
     const letters = "0123456789ABCDEF";
@@ -19,15 +20,16 @@ const toast = useToast();
 
 const fetchCats = async () => {
     try {
-        const response = await fetch(`http://localhost:5000/cats`, {
+        const response = await fetch(`http://localhost:5000/api/cats`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            credentials: 'include',
         });
         if (response.ok) {
-            cats.value = await response.json();
-
+            const json = await response.json();
+            cats.value = json.cats;
         } else {
             toast.error('Failed to fetch cat details.');
         }
@@ -50,14 +52,21 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="card-container">
-        <RouterLink v-for="cat in cats" :key="cat.id" :to="{ name: 'edit-cat', params: { id: cat.id } }">
+    <div v-if="state.isLoading" class="load-spinner">
+        <PulseLoader />
+    </div>
+    <div v-else class="card-container">
+        <RouterLink v-for="cat in cats" :key="cat._id" :to="{ name: 'edit-cat', params: { id: cat._id } }">
             <CatCard :catModel="cat" :bgcolor="getRandomColor()"></CatCard>
         </RouterLink>
     </div>
 </template>
 
 <style scoped>
+.load-spinner {
+    text-align: center;
+}
+
 .card-container {
     margin-top: 20px;
     display: grid;

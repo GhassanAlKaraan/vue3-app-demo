@@ -27,11 +27,12 @@ const handleAdd = async () => {
         favoriteToy: form.favoriteToy
     };
     try {
-        const response = await fetch(`http://localhost:5000/cats`, {
+        const response = await fetch(`http://localhost:5000/api/cats`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(newCat),
         });
         console.log(response);
