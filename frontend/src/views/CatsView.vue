@@ -1,4 +1,5 @@
 <script setup>
+import router from "@/router";
 import CatCard from "@/components/CatCard.vue";
 import { useToast } from "vue-toastification";
 import { reactive, onMounted, ref } from "vue";
@@ -30,7 +31,11 @@ const fetchCats = async () => {
         if (response.ok) {
             const json = await response.json();
             cats.value = json.cats;
-        } else {
+        } else if (response.status === 401 || response.status === 408) {
+            toast.error('Please log in first.');
+            router.push('/login');
+        }
+        else {
             toast.error('Failed to fetch cat details.');
         }
     } catch (error) {

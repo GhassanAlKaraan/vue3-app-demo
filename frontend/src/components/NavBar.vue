@@ -32,6 +32,9 @@ const isActiveLink = (routePath) => {
                 <RouterLink to="/login" :class="{ active: isActiveLink('/login') }">
                     <li>Login</li>
                 </RouterLink>
+                <RouterLink to="/register" :class="{ active: isActiveLink('/register') }">
+                    <li>Register</li>
+                </RouterLink>
             </ul>
         </div>
     </nav>

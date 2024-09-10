@@ -39,7 +39,10 @@ const handleAdd = async () => {
         if (response.ok) {
             toast.success('Cat added successfully.');
             router.push('/cats');
-        } else {
+        }  else if (response.status === 401 || response.status === 408) {
+            toast.error('Please log in first.');
+            router.push('/login');
+        }else {
             toast.error('Cat could not be added.');
         }
     } catch (error) {

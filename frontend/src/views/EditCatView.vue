@@ -35,7 +35,9 @@ const fetchDetails = async () => {
             form.breed = cat.breed;
             form.age = cat.age;
             form.favoriteToy = cat.favoriteToy;
-        } else {
+        }  else if (response.status === 401 || response.status === 408) {
+            toast.error('Please log in first.');
+        }else {
             toast.error('Failed to fetch cat details.');
         }
     } catch (error) {

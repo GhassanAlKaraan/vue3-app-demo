@@ -3,23 +3,30 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from "vue-toastification";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
+
+
+const name = ref('');
 const email = ref('');
 const password = ref('');
 const errorMessage = ref('');
 const router = useRouter();
-const state = reactive({ isLoading: false });
+
 const toast = useToast();
+const state = reactive({ isLoading: false });
 
-const login = async () => {
+const register = async () => {
+    state.isLoading = true;
     try {
-        console.log(`Email: ${email.value}, Password: ${password.value}`);
+        console.log(`Name: ${name.value}, Email: ${email.value}, Password: ${password.value}`);
 
-        const response = await fetch('http://localhost:5000/api/users/login', {
+        const response = await fetch('http://localhost:5000/api/users/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                name: name.value,
                 email: email.value,
                 password: password.value,
             }),
@@ -27,19 +34,21 @@ const login = async () => {
         });
 
         if (response.ok) {
-            toast.success('Login successful!');
+            toast.success('Registration successful!');
             router.push('/');
-        } else if (response.status === 401) {
-            errorMessage.value = 'Invalid email or password.';
+        }
+        else if (response.status === 409) {
+            const errorData = await response.json();
+            errorMessage.value = errorData.message || 'Email already exists.';
             toast.error(errorMessage.value);
         }
         else {
             const errorData = await response.json();
-            errorMessage.value = errorData.message || 'Login failed. Please try again.';
+            errorMessage.value = errorData.message || 'Registration failed. Please try again later.';
             toast.error(errorMessage.value);
         }
     } catch (error) {
-        console.error('Login error:', error);
+        console.error('Register error:', error);
         errorMessage.value = 'An error occurred. Please try again later.';
         toast.error(errorMessage.value);
     } finally {
@@ -49,12 +58,16 @@ const login = async () => {
 </script>
 
 <template>
-    <div class="login-container">
+    <div class="register-container">
         <header>
-            <h2>Welcome, please login</h2>
+            <h2>Let's create an account for you</h2>
         </header>
         <main>
-            <form class="login-form" @submit.prevent="login">
+            <form class="register-form" @submit.prevent="register">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" v-model="name" required />
+                </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" v-model="email" required />
@@ -66,7 +79,7 @@ const login = async () => {
                 <div v-if="state.isLoading" class="load-spinner">
                     <PulseLoader />
                 </div>
-                <button v-else type="submit" class="login-button">Login</button>
+                <button v-else type="submit" class="register-button">Register</button>
                 <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> <!-- Error message display -->
             </form>
         </main>
@@ -78,7 +91,7 @@ const login = async () => {
     text-align: center;
 }
 
-.login-container {
+.register-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -96,7 +109,7 @@ h2 {
     font-size: 24px;
 }
 
-.login-form {
+.register-form {
     display: flex;
     flex-direction: column;
 }
@@ -119,7 +132,7 @@ input {
     font-size: 16px;
 }
 
-.login-button {
+.register-button {
     background-color: #181818;
     color: white;
     border: none;
@@ -131,7 +144,7 @@ input {
     transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.register-button:hover {
     background-color: #53AF50;
 }
 
